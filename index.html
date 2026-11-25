@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bảo tàng Đà Nẵng – Hướng dẫn tham quan theo tầng</title>
+<style>
+:root{--bg:#eef4ff;--panel:rgba(255,255,255,.93);--text:#16213a;--muted:#5b6784;--accent:#c2410c;--line:#e1d9cc;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10151f;--panel:rgba(28,34,50,.93);--text:#eef0f6;--muted:#a3adc4;--accent:#fb923c;--line:#363f58}}
+:root[data-theme="dark"]{--bg:#10151f;--panel:rgba(28,34,50,.93);--text:#eef0f6;--muted:#a3adc4;--accent:#fb923c;--line:#363f58}
+*{box-sizing:border-box}
+html,body{height:100%;height:100dvh;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent;margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow:hidden}
+#c{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
+#labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.top{position:absolute;left:12px;right:12px;top:calc(env(safe-area-inset-top,0px) + 12px);max-width:560px;z-index:5;display:flex;flex-direction:column;gap:8px}
+.row{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}.row::-webkit-scrollbar{display:none}
+.top input{width:100%;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:16px}
+.btn{padding:9px 13px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:14px;cursor:pointer;white-space:nowrap}
+.btn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+#card{position:absolute;left:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);width:calc(100% - 24px);max-width:380px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:13px 15px;z-index:5;font-size:14px;line-height:1.5;box-shadow:0 8px 30px rgba(0,0,0,.2)}
+#card b{font-size:16px}#card .m{color:var(--muted)}#card .btn{margin:8px 6px 0 0}
+.lbl{position:absolute;transform:translate(-50%,-100%);font-size:12px;font-weight:700;padding:3px 8px;border-radius:9px;background:var(--panel);border:1px solid var(--line);color:var(--text);white-space:nowrap}
+.pin{pointer-events:auto;cursor:pointer;border-width:2px}
+.lbl .sb{display:block;font-weight:500;font-size:10px;color:var(--muted);line-height:1.2}.rm{font-size:11px;padding:2px 7px;pointer-events:none}
+#lg{position:absolute;right:12px;top:calc(env(safe-area-inset-top,0px) + 12px);z-index:5;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px 12px;font-size:12px;line-height:1.55;max-width:240px;box-shadow:0 8px 30px rgba(0,0,0,.2)}
+#lg .sw{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px}#lg .n{float:right;margin-left:10px;font-weight:700}
+@media(max-width:899px){#lg{top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 200px);display:none}}
+.st{font-weight:500;font-style:italic;color:var(--muted);background:transparent;border:0}
+.num{background:var(--accent);color:#fff;border:0;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;padding:0}
+#card{max-height:46vh;max-height:46dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.btn{touch-action:manipulation;min-height:36px}
+#card .cx{float:right;position:sticky;top:0;margin:-4px -6px 6px 10px;width:36px;height:36px;min-height:0;padding:0;border-radius:50%;font-size:17px;line-height:1;background:var(--accent);color:#fff;border:0;display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+#card::after{content:"";display:block;clear:both}
+#nowebgl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;font-size:15px;line-height:1.6;z-index:9}
+@media(max-width:600px){
+ .top{left:8px;right:8px;top:calc(env(safe-area-inset-top,0px) + 8px);gap:6px}
+ .top input{padding:10px 12px}
+ .btn{padding:8px 11px;font-size:13px}
+ #card{left:8px;bottom:calc(env(safe-area-inset-bottom,0px) + 8px);width:calc(100% - 16px);max-width:none;font-size:13px;padding:11px 13px}
+ #card b{font-size:15px}
+ #lg{left:8px;right:8px;max-width:none;top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 46vh + 20px)}
+ .lbl{font-size:11px;padding:2px 6px}
+}
+@media(max-height:480px) and (orientation:landscape){#card{max-height:60vh;max-width:340px}.top{max-width:420px}}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="labels"></div>
+<div class="top">
+  <input id="q" placeholder="Tìm: cà phê, thang cuốn, lễ tân, 6 thời kỳ…" autocomplete="off">
+  <div class="row" id="fr"></div>
+  <div class="row" id="tr"></div>
+</div>
+<div id="lg"></div>
+<div id="card"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" onerror="window.__noThree=1"></script>
+<script>if(!window.THREE){document.body.insertAdjacentHTML("beforeend","<div id=\"nowebgl\">Không tải được thư viện 3D (three.js). Kiểm tra kết nối mạng rồi tải lại trang.</div>");throw new Error("three.js missing")}</script>
+<script>
+var FH=4.5,TY={pub:['Công cộng',0x2fa36b],exh:['Triển lãm',0x8a5cd6],svc:['Dịch vụ',0xe8903a],tech:['Kỹ thuật',0x7d8799]};
+// Dựng theo bản vẽ mặt bằng studioMilou (2019): tọa độ lấy từ mặt bằng tầng 1 (ảnh 2048 px), 12,35 px = 1 m; gốc tại giữa khu đất
+var SCL=12.35;function mxp(p){return (p-1000)/SCL}function mzp(p){return (p-840)/SCL}
+function G1(x,y){return [mxp(x),mzp(y)]}
+function G2(x,y){return G1(1515-(1228-x)/1.158,435+(y-505)/1.158)}
+function G3(x,y){return G1(1515-(1268-x)/1.158,435+(y-500)/1.158)}
+function BK(x1,y1,x2,y2,fs,c,k){return {x:mxp((x1+x2)/2),z:mzp((y1+y2)/2),w:(x2-x1)/SCL,d:(y2-y1)/SCL,fs:fs,c:c,k:k}}
+function ZP(o,x,y){var q=G1(x,y);o.x=q[0];o.z=q[1];return o}
+var Z=[
+ZP({id:'gate',f:1,ty:'pub',n:'Lối vào Bạch Đằng',k:'cong vao bach dang',d:'Lối tiếp cận từ đường Bạch Đằng (phía sông Hàn), đi vào sân vườn và các tiện ích tầng trệt.'},905,445),
+ZP({id:'gate2',f:1,ty:'pub',n:'Lối vào Trần Phú',s:'Đón trả khách',k:'cong vao tran phu don tra khach',d:'Điểm đón trả khách phía đường Trần Phú, đi thẳng vào sảnh chính.'},1405,1180),
+ZP({id:'amen',f:1,ty:'pub',n:'Nhà hàng',s:'Ăn uống · tòa di sản',k:'nha hang',d:'Tầng trệt tòa nhà di sản, nửa phía tây là nhà hàng.'},1010,545),
+ZP({id:'conf',f:1,ty:'pub',n:'Phòng hội thảo',s:'100 chỗ · hội thảo, sự kiện',k:'phong hoi thao 100 cho',d:'Tầng trệt tòa nhà di sản, nửa phía đông là phòng hội thảo 100 chỗ.'},1215,545),
+ZP({id:'hall',f:1,ty:'pub',n:'Hội trường HĐND',s:'Hội thảo lớn · biểu diễn',k:'hoi truong hdnd bao tang',d:'Hội trường HĐND được giữ lại, dùng làm phòng hội thảo lớn của bảo tàng, nối với quảng trường Điện Hải.'},506,860),
+ZP({id:'garden',f:1,ty:'exh',n:'Sân giữa',s:'Hiện vật trưng bày ngoài trời',k:'san giua san vuon ngoai troi',d:'Sân giữa được cánh nhà mới bao quanh ba phía, dùng trưng bày hiện vật ngoài trời.'},1090,790),
+ZP({id:'lobby',f:1,ty:'svc',n:'Sảnh chính',s:'Bán vé · lễ tân',k:'le tan ve sanh chinh',d:'Sảnh chính phía đông, điểm bắt đầu hành trình, gần điểm đón trả khách đường Trần Phú.'},1400,985),
+ZP({id:'cafe',f:1,ty:'pub',n:'Quán cà phê',s:'Đồ uống · nghỉ chân',k:'ca phe cafe',d:'Quán cà phê ngoài trời phía tây sân giữa; tầng 2 có thêm không gian cà phê.'},800,610),
+ZP({id:'shop',f:1,ty:'svc',n:'Cửa hàng lưu niệm',s:'Quà lưu niệm',k:'luu niem shop qua',d:'Cửa hàng lưu niệm cạnh sảnh chính, cuối hành trình.'},1295,1040),
+ZP({id:'short',f:1,ty:'exh',n:'Triển lãm định kỳ',s:'Tranh ảnh · chủ đề thay theo đợt',k:'dinh ky ngan han',d:'Sảnh trưng bày định kỳ dạng thông tầng dài khoảng 36 m dọc đường Trần Phú, đi theo lộ trình zích zắc.'},1030,1020),
+ZP({id:'esc',f:1,f2:3,ty:'svc',n:'Thang cuốn',s:'Lên tầng 3',k:'thang cuon len tang 3',d:'Từ sảnh chính, khách lên thẳng tầng 3 để bắt đầu trưng bày thường xuyên.'},1450,905),
+ZP({id:'lib',f:2,ty:'exh',n:'Thư viện bảo tàng',s:'Sách · tài liệu tra cứu',k:'thu vien bao tang',d:'Tòa nhà di sản tầng 2: thư viện bảo tàng, kệ sách và bàn đọc.'},1007,500),
+ZP({id:'explore',f:2,ty:'exh',n:'Phòng khám phá',s:'Bàn tương tác · trải nghiệm',k:'phong kham pha tuong tac',d:'Tòa nhà di sản tầng 2: phòng khám phá với các bàn tương tác.'},1215,500),
+ZP({id:'a1',f:3,ty:'exh',n:'Hiện vật 1',s:'Bức tường ảnh · tổng quan Đà Nẵng',k:'buc tuong anh tong quan',d:'Bức tường ảnh giới thiệu tổng quan về thành phố Đà Nẵng. Mô hình: các tấm ảnh ghép thành một mảng tường.'},880,1030),
+ZP({id:'a2',f:3,ty:'exh',n:'Hiện vật 2',s:'Thiên nhiên và con người',k:'thien nhien con nguoi',d:'Chuyên đề thiên nhiên và con người Đà Nẵng. Mô hình: núi, mặt nước và các hình người.'},996,1030),
+ZP({id:'a3',f:3,ty:'exh',n:'Hiện vật 3',s:'Lịch sử đô thị Đà Nẵng',k:'lich su do thi',d:'Chuyên đề lịch sử đô thị Đà Nẵng. Mô hình: các khối nhà của một đô thị đang lớn dần.'},1112,1030),
+ZP({id:'a4',f:3,ty:'exh',n:'Hiện vật 4',s:'Đấu tranh bảo vệ độc lập dân tộc',k:'dau tranh doc lap',d:'Chuyên đề cuộc đấu tranh bảo vệ nền độc lập dân tộc. Mô hình: cột cờ và khẩu pháo trên bệ.'},1228,1030),
+ZP({id:'a5',f:3,ty:'exh',n:'Hiện vật 5',s:'Chứng tích chiến tranh',k:'chung tich chien tranh',d:'Chuyên đề chứng tích chiến tranh. Mô hình: mũ, đầu đạn và bao cát.'},1344,1030),
+ZP({id:'a6',f:3,ty:'exh',n:'Hiện vật 6',s:'Hội nhập và phát triển',k:'hoi nhap phat trien cau',d:'Chuyên đề Đà Nẵng hội nhập và phát triển. Mô hình: cây cầu vòm bắc qua mặt nước.'},1460,1030),
+ZP({id:'a7',f:3,ty:'exh',n:'Hiện vật 7',s:'Đa dạng văn hóa',k:'da dang van hoa nha truyen thong nhac cu trang phuc',d:'Chuyên đề đa dạng văn hóa của các cộng đồng sống trên địa bàn: nhà truyền thống, nông cụ, nhạc cụ, trang phục, lễ hội. Mô hình: ngôi nhà mái nhọn, trống, hình nộm mặc trang phục và nông cụ. Nằm ở cánh tây tầng 3.'},768,800),
+ZP({id:'a8',f:2,ty:'exh',n:'Hiện vật 8',s:'Tòa thị chính Đà Nẵng',k:'toa thi chinh',d:'Chuyên đề Tòa thị chính Đà Nẵng. Mô hình: tòa nhà có hàng cột và mái chóp. Nằm ở tầng 2 tòa nhà di sản.'},1111,605),
+ZP({id:'a9',f:3,ty:'exh',n:'Hiện vật 9',s:'Sưu tập cổ vật',k:'suu tap co vat khao co do dong do gom trang suc',d:'Sưu tập cổ vật của bảo tàng: hiện vật khảo cổ nhiều nghìn năm tuổi, đồ đồng, đồ gốm, trang sức cổ. Mô hình: tủ kính chứa chum, trống đồng, bình gốm và vòng trang sức.'},1111,540)
+];
+var BL=[BK(938,435,1285,662,[0,1,2],0xeadcc0,'old'),BK(1335,533,1512,665,[0,1,2],0xb39d82,'new'),BK(1288,665,1510,930,[0,1,2],0xb39d82,'new'),BK(722,930,1507,1092,[0,2],0xb39d82,'new'),BK(714,668,822,930,[2],0xb39d82,'new'),BK(714,533,895,668,[1,2],0xb39d82,'new'),BK(378,742,635,985,[0,1],0xd8c9a8,'old'),BK(215,985,645,1135,[0],0xd8c9a8,'old'),BK(455,700,570,742,[0],0xd8c9a8,'old'),BK(895,606,938,642,[1,2],0xb39d82,'new'),BK(1285,598,1335,642,[0,1,2],0xb39d82,'new'),BK(635,925,722,950,[0],0xb39d82,'new'),BK(718,640,1515,1135,[0],0x8a8f9c,'bs')];
+var cv=document.getElementById('c'),R=new THREE.WebGLRenderer({canvas:cv,antialias:true});
+R.setPixelRatio(Math.min(devicePixelRatio,innerWidth<700?1.5:2));R.shadowMap.enabled=true;
+var S=new THREE.Scene();S.background=new THREE.Color(0xcfe3ff);S.fog=new THREE.Fog(0xcfe3ff,200,520);
+var cam=new THREE.PerspectiveCamera(50,1,0.5,900);
+S.add(new THREE.HemisphereLight(0xffffff,0x9a9a8a,0.85));
+var sun=new THREE.DirectionalLight(0xffffff,0.8);sun.position.set(60,90,50);sun.castShadow=true;sun.shadow.mapSize.set(innerWidth<700?512:1024,innerWidth<700?512:1024);
+var sc=sun.shadow.camera;sc.left=-90;sc.right=90;sc.top=90;sc.bottom=-90;sc.far=300;S.add(sun);
+var g=new THREE.Mesh(new THREE.PlaneGeometry(600,600),new THREE.MeshLambertMaterial({color:0xd9d4c7,transparent:true}));g.rotation.x=-Math.PI/2;g.receiveShadow=true;S.add(g);
+function flat(x,z,w,d,col,y){var m=new THREE.Mesh(new THREE.BoxGeometry(w,0.1,d),new THREE.MeshLambertMaterial({color:col}));m.position.set(x,y,z);m.receiveShadow=true;S.add(m);return m}
+flat(0,-48,400,15,0x4b5160,0.06);flat(0,48,400,16,0x4b5160,0.06);flat(0,-37,400,8,0xcfc9bb,0.07);flat(0,38.5,400,5,0xcfc9bb,0.07);flat(0,-125,600,110,0x6fb4d8,0.1);
+flat(mxp(846),mzp(820),1337/SCL,780/SCL,0xe3dfd3,0.08);[[600,435,895,620],[895,665,1290,915],[840,1095,1340,1190],[180,435,375,1130]].forEach(a=>{var b=BK(a[0],a[1],a[2],a[3]);flat(b.x,b.z,b.w,b.d,0x86c27c,0.1)});
+var gm=new THREE.MeshLambertMaterial({color:0xb5523b}),GP=G1(905,432);
+[-4,4].forEach(o=>{var p=new THREE.Mesh(new THREE.BoxGeometry(1.2,5,1.2),gm);p.position.set(GP[0]+o,2.5,GP[1]);p.castShadow=true;S.add(p)});
+var gb=new THREE.Mesh(new THREE.BoxGeometry(9.2,0.9,1.4),gm);gb.position.set(GP[0],5,GP[1]);S.add(gb);
+// kết cấu mặt tiền
+function mk(fn){var c=document.createElement('canvas');c.width=c.height=64;fn(c.getContext('2d'));var t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;return t}
+function sideMat(k,col,len){var hex='#'+new THREE.Color(col).getHexString(),t=mk(x=>{x.fillStyle=hex;x.fillRect(0,0,64,64);
+  if(k==='old'){x.fillStyle='#4f6b85';x.fillRect(8,10,18,40);x.fillRect(38,10,18,40);x.fillStyle='rgba(255,255,255,.55)';x.fillRect(8,10,18,3);x.fillRect(38,10,18,3);x.fillStyle='rgba(0,0,0,.15)';x.fillRect(0,58,64,6)}
+  else if(k==='new'){x.fillStyle='rgba(180,220,235,.4)';x.fillRect(0,18,64,28);x.fillStyle='rgba(70,50,30,.4)';for(var i=0;i<8;i++)x.fillRect(i*8,0,3,64)}});
+  t.repeat.set(Math.max(1,Math.round(len/6)),1);return new THREE.MeshLambertMaterial({map:t})}
+var FM=[];
+BL.forEach(b=>{var n=b.k==='bs'?1:b.fl,roof=new THREE.MeshLambertMaterial({color:new THREE.Color(b.c).multiplyScalar(0.62)}),roofB=new THREE.MeshLambertMaterial({map:(function(){var hx=b.k==='old'?'#a8895c':'#7b8797',t=mk(x=>{x.fillStyle=hx;x.fillRect(0,0,64,64);x.fillStyle='rgba(255,255,255,.1)';x.fillRect(2,2,30,30);x.fillRect(34,34,28,28);x.strokeStyle='rgba(0,0,0,.35)';x.lineWidth=2;x.strokeRect(0,0,64,64)});t.repeat.set(Math.max(1,b.w/4),Math.max(1,b.d/4));return t})(),side:THREE.DoubleSide});
+  for(var kk=0;kk<b.fs.length;kk++){var k=b.fs[kk];var mt=b.k==='bs'?[0,1,2,3,4,5].map(()=>new THREE.MeshLambertMaterial({color:b.c})):[sideMat(b.k,b.c,b.d),sideMat(b.k,b.c,b.d),roof,roofB,sideMat(b.k,b.c,b.w),sideMat(b.k,b.c,b.w)];
+    var m=new THREE.Mesh(new THREE.BoxGeometry(b.w,FH-0.08,b.d),mt);m.position.set(b.x,b.k==='bs'?-FH/2:(k+0.5)*FH,b.z);m.castShadow=m.receiveShadow=true;m.userData={k:k,bs:b.k==='bs'};if(b.k!=='bs')m.add(new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),new THREE.LineBasicMaterial({color:0x232733})));S.add(m);FM.push(m)}});
+// cây
+var tg=new THREE.ConeGeometry(2.2,5,7),tm=new THREE.MeshLambertMaterial({color:0x3fa65a}),tk=new THREE.CylinderGeometry(0.3,0.4,2,6),tkm=new THREE.MeshLambertMaterial({color:0x7a5a3a});
+function tree(x,z){var t=new THREE.Mesh(tk,tkm),c=new THREE.Mesh(tg,tm);t.position.set(x,1,z);c.position.set(x,4.3,z);c.castShadow=true;S.add(t,c)}
+for(var tx=-70;tx<=70;tx+=9){if(Math.abs(tx-GP[0])>7)tree(tx,-35.5)}for(var tz=-26;tz<=28;tz+=9)tree(-69,tz);for(var tx=-50;tx<=50;tx+=10)tree(tx,36);
+// nhãn
+var LB=[],labels=document.getElementById('labels');
+function addLabel(txt,cls,v,click){var e=document.createElement('div');e.className='lbl '+cls;e.innerHTML=txt;if(click)e.onclick=click;labels.appendChild(e);var o={el:e,v:v,vis:true};LB.push(o);return o}
+addLabel('Đường Bạch Đằng','st',new THREE.Vector3(30,1,-48));addLabel('Sông Hàn','st',new THREE.Vector3(0,1,-90));addLabel('Đường Trần Phú','st',new THREE.Vector3(-30,1,48));
+// điểm tham quan
+var sel='all',ft=null,PN=[],cur=null;
+function fy(f){return (f<0?-FH:(f-1)*FH)+0.25}
+function fname(f){return f<0?'Tầng hầm':'Tầng '+f}
+Z.forEach(z=>{var pad=new THREE.Mesh(new THREE.CylinderGeometry(2.2,2.2,0.3,20),new THREE.MeshBasicMaterial({color:TY[z.ty][1]}));pad.position.set(z.x,fy(z.f),z.z);S.add(pad);
+  var lb=addLabel(z.n+(z.s?'<span class="sb">'+z.s+'</span>':''),'pin',new THREE.Vector3(z.x,fy(z.f)+3,z.z),()=>pickZ(z));lb.el.style.borderColor='#'+new THREE.Color(TY[z.ty][1]).getHexString();PN.push({z:z,pad:pad,lb:lb})});
+function refresh(){if(window.INT)INT.forEach(o=>{var v=sel==='all'?o.f>0:(sel>=o.f&&sel<=o.f2);o.g.visible=v;o.lb.forEach(l=>l.vis=v)});PN.forEach(p=>{var z=p.z,ok=sel==='all'?z.f>0:(z.f===sel||(z.f2&&sel>=z.f&&sel<=z.f2));ok=ok&&(!ft||z.ty===ft);p.pad.visible=ok;p.lb.vis=ok&&!rt.on;if(ok&&z.f2){p.pad.position.y=fy(sel);p.lb.v.y=fy(sel)+3}});nums.forEach((o,k)=>o.vis=rt.on&&fl(RP[stops[k]].y)===sel)}
+// tầng
+function setOp(m,o){m.material.forEach(x=>{x.transparent=o<1;x.opacity=o;x.depthWrite=o>=1;x.needsUpdate=true})}
+function fl(y){return y>8?3:y>3.5?2:1}
+function setFloor(s){sel=s;FM.forEach(m=>{var u=m.userData,k=u.k+1;m.visible=!u.bs&&(k===s||(!!m3&&k<s));setOp(m,k===s&&!m3?0.3:1);if(!u.bs){m.material[2].visible=!!m3;if(!m3){var fm=m.material[3];fm.transparent=false;fm.opacity=1;fm.depthWrite=true;fm.needsUpdate=true}}});g.material.opacity=1;g.material.needsUpdate=true;refresh();
+  document.querySelectorAll('[data-f]').forEach(b=>b.classList.toggle('on',b.dataset.f==String(s)));try{history.replaceState(null,'','#tang'+s)}catch(e){}}
+var fr=document.getElementById('fr'),tr=document.getElementById('tr');
+[['Tầng 1',1],['Tầng 2',2],['Tầng 3',3]].forEach(a=>{var b=document.createElement('button');b.className='btn';b.textContent=a[0];b.dataset.f=a[1];b.onclick=()=>{location.hash='tang'+a[1]};fr.appendChild(b)});
+var rb=document.createElement('button');rb.className='btn';rb.textContent='▶ Hành trình';rb.onclick=()=>rt.on?routeOff():routeOn();fr.appendChild(rb);
+[['Mọi loại',null]].concat(Object.keys(TY).map(k=>[TY[k][0],k])).forEach(a=>{var b=document.createElement('button');b.className='btn';b.textContent=a[0];b.dataset.t=a[1]||'';b.onclick=()=>{ft=a[1];document.querySelectorAll('[data-t]').forEach(x=>x.classList.toggle('on',x===b));refresh()};tr.appendChild(b)});
+tr.firstChild.classList.add('on');
+// camera
+var tgt=new THREE.Vector3(0,3,5),th=0.4,ph=1.0,rad=140,goal=null,ptrs={},lastD=0;
+var m3=null;
+function apply(){if(m3){cam.position.set(m3.x,m3.y,m3.z);cam.rotation.order='YXZ';cam.rotation.set(m3.pitch,m3.yaw,0);if(Math.abs(cam.fov-m3.fov)>0.01){cam.fov=m3.fov;cam.updateProjectionMatrix()}return}
+  if(cam.fov!==50){cam.fov=50;cam.updateProjectionMatrix()}
+  cam.position.set(tgt.x+rad*Math.sin(ph)*Math.sin(th),tgt.y+rad*Math.cos(ph),tgt.z+rad*Math.sin(ph)*Math.cos(th));cam.lookAt(tgt)}
+var panMode=false;
+function panBy(dx,dy){goal=null;var s=rad*0.0017,cx=Math.cos(th),sx=Math.sin(th);tgt.x=Math.max(-150,Math.min(150,tgt.x-cx*dx*s-sx*dy*s));tgt.z=Math.max(-150,Math.min(150,tgt.z+sx*dx*s-cx*dy*s))}
+cv.addEventListener('contextmenu',e=>e.preventDefault());
+function fly(t,r,p){goal={t:t.clone(),r:r,p:p}}
+cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);ptrs[e.pointerId]={x:e.clientX,y:e.clientY}});
+cv.addEventListener('pointermove',e=>{var p=ptrs[e.pointerId];if(!p)return;var dx=e.clientX-p.x,dy=e.clientY-p.y;p.x=e.clientX;p.y=e.clientY;var ids=Object.keys(ptrs);
+  if(ids.length===2){var a=ptrs[ids[0]],b=ptrs[ids[1]],d=Math.hypot(a.x-b.x,a.y-b.y);if(lastD){if(m3)m3.fov=Math.max(30,Math.min(95,m3.fov*lastD/d));else rad=Math.max(20,Math.min(300,rad*lastD/d))}if(!m3)panBy(dx/2,dy/2);lastD=d;return}
+  goal=null;if(!m3&&(panMode||e.shiftKey||(e.buttons&2))){panBy(dx,dy);return}if(m3){m3.auto=false;m3.yaw+=dx*0.005*m3.fov/60;m3.pitch=Math.max(-1.4,Math.min(1.4,m3.pitch+dy*0.004*m3.fov/60))}else{th-=dx*0.006;ph=Math.max(0.15,Math.min(1.5,ph-dy*0.005))}});
+['pointerup','pointercancel'].forEach(ev=>cv.addEventListener(ev,e=>{delete ptrs[e.pointerId];lastD=0}));
+cv.addEventListener('wheel',e=>{e.preventDefault();if(m3)m3.fov=Math.max(30,Math.min(95,m3.fov*(1+e.deltaY*0.001)));else rad=Math.max(20,Math.min(300,rad*(1+e.deltaY*0.001)))},{passive:false});
+// thẻ thông tin
+var card=document.getElementById('card');
+function intro(){cur=null;card.innerHTML='<b>'+fname(sel)+' – Bảo tàng Đà Nẵng</b><br><span class="m">Mỗi tầng là một trang riêng: chọn Tầng 1, 2, 3 ở trên, bấm điểm có nhãn hoặc bắt đầu hành trình. Mô hình dựng theo tỉ lệ thật (1 đơn vị = 1 m) từ các bản vẽ mặt bằng studioMilou (2019). Chín chuyên đề trưng bày lấy theo công bố của bảo tàng; vị trí từng chuyên đề trong mô hình là bố trí minh họa.</span><br>'+Z.map((z,i)=>(z.f===sel||(z.f2&&sel>=z.f&&sel<=z.f2))?'<button class="btn" onclick="pickZ(Z['+i+'])">'+z.n.split(' – ')[0].split(' (')[0]+'</button>':'').join('')+'<br><button class="btn" onclick="routeOn()">▶ Bắt đầu hành trình</button>'}
+function pickZ(z){if(rt.on)routeOff(true);cur=z;if(sel!=='all'&&!(z.f===sel||(z.f2&&sel>=z.f&&sel<=z.f2)))setFloor(z.f);
+  card.innerHTML='<b>'+z.n+'</b><br><span class="m">'+TY[z.ty][0]+' · '+fname(z.f)+(z.f2?'–'+fname(z.f2):'')+'</span><br>'+z.d+'<br><button class="btn" onclick="go360('+ZL.indexOf(z)+')">👁 Xem 360° tại đây</button><button class="btn" onclick="routeOn()">▶ Hành trình</button>';
+  fly(new THREE.Vector3(z.x,fy(z.f2&&sel>=z.f&&sel<=z.f2?sel:z.f),z.z),48,0.95)}
+function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d')}
+document.getElementById('q').addEventListener('keydown',function(e){if(e.key!=='Enter')return;var q=norm(this.value.trim());if(!q)return;
+  var z=Z.filter(o=>o.f>0&&(norm(o.n).indexOf(q)>=0||o.k.indexOf(q)>=0))[0];if(z){pickZ(z)}else card.innerHTML='<span class="m">Không tìm thấy “'+this.value.replace(/</g,'&lt;')+'”.</span>'});
+// hành trình
+function Q(g,y,t,d){var r=[g[0],g[1],y];if(t){r.push(t,d)}return r}
+var Rt=[Q(G1(905,432),0.6,'Lối vào Bạch Đằng','Điểm bắt đầu từ đường Bạch Đằng, phía sông Hàn.'),Q(G1(905,915),0.6),Q(G1(1330,915),0.6),
+Q(G1(1400,985),0.6,'Sảnh chính & Lễ tân','Mua vé và nhận hướng dẫn. Đây cũng là nơi quay về khi kết thúc hành trình.'),
+Q(G1(1450,905),0.6,'Thang cuốn lên tầng 3','Đi thẳng lên tầng 3 để bắt đầu trưng bày thường xuyên.'),Q(G3(1235,1060),9.6),Q(G3(1200,1190),9.6),
+Q(G3(700,1180),9.6,'Hiện vật 1–6','Sáu chuyên đề dọc dải phía nam: bức tường ảnh, thiên nhiên và con người, lịch sử đô thị, đấu tranh bảo vệ độc lập, chứng tích chiến tranh, hội nhập và phát triển. Cánh tây tiếp theo là Hiện vật 7 – Đa dạng văn hóa.'),Q(G3(420,1180),9.6),Q(G3(400,700),9.6),Q(G3(560,720),9.6),Q(G3(800,720),9.6),
+Q(G3(800,620),9.6,'Hiện vật 9 – Sưu tập cổ vật','Tòa nhà di sản tầng 3: hiện vật khảo cổ, đồ đồng, đồ gốm, trang sức cổ. Sau đó đi xuống tầng 2.'),
+Q(G2(800,620),5.1,'Hiện vật 8 – Tòa thị chính','Mô hình Tòa thị chính Đà Nẵng; cạnh đó là thư viện bảo tàng và phòng khám phá.'),Q(G2(1000,725),5.1),Q(G2(1095,880),5.1),Q(G1(1400,770),0.6),Q(G1(1400,930),0.6),
+Q(G1(1295,1040),0.6,'Cửa hàng lưu niệm','Quay lại sảnh, mua quà lưu niệm.'),Q(G1(1330,915),0.6),Q(G1(905,915),0.6),Q(G1(905,640),0.6),
+Q(G1(800,610),0.6,'Quán cà phê','Kết thúc hành trình, nghỉ chân.')];
+var RT_BD=Rt,RT_TP=[Q(G1(1405,1185),0.6,'Lối vào Trần Phú','Điểm đón trả khách phía đường Trần Phú, đi thẳng vào sảnh chính.'),Q(G1(1405,1085),0.6)].concat(Rt.slice(3)),RP,stops,tube,nums,rtSel=null;
+function useRoute(w){Rt=w==='tp'?RT_TP:RT_BD;RP=Rt.map(r=>new THREE.Vector3(r[0],r[2],r[1]));stops=[];Rt.forEach((r,i)=>{if(r[3])stops.push(i)});
+  if(tube)S.remove(tube);if(nums)nums.forEach(o=>{o.el.remove();LB.splice(LB.indexOf(o),1)});
+  tube=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(RP,false,'catmullrom',0.02),300,0.35,6),new THREE.MeshBasicMaterial({color:0xffb300}));tube.visible=false;S.add(tube);
+  nums=stops.map((si,k)=>{var o=addLabel(k+1,'num',RP[si].clone().setY(RP[si].y+2.5));o.vis=false;return o});rtSel=w}
+useRoute('bd');
+var mk2=new THREE.Mesh(new THREE.SphereGeometry(0.9,16,12),new THREE.MeshBasicMaterial({color:0xff5a1f}));mk2.visible=false;S.add(mk2);
+var rt={on:false,i:0,k:0,mv:false,seg:0,auto:false,wait:0,tgt:0};
+function rid(){return rt.k===0&&rtSel==='tp'?'gate2':RID[rt.k]}
+function ctl(){return '<button class="btn" onclick="go360(ZL.indexOf(byId(rid())))">👁 360°</button><button class="btn" onclick="prevS()">◀</button><button class="btn" onclick="nextS()">'+(rt.k>=stops.length-1?'↺ Lại':'Tiếp ▶')+'</button><button class="btn'+(rt.auto?' on':'')+'" onclick="autoS()">⏯ Tự động</button><button class="btn" onclick="routeOff()">✕</button>'}
+function showStop(k){var r=Rt[stops[k]];setFloor(fl(r[2]));card.innerHTML='<b>Bước '+(k+1)+'/'+stops.length+' · '+r[3]+'</b><br>'+r[4]+'<br>'+ctl();fly(RP[stops[k]],55,0.95)}
+function routeOn(w){if(!w){if(rt.on)routeOff(true);cur=null;card.innerHTML='<b>▶ Hành trình tham quan</b><br><span class="m">Chọn điểm bắt đầu:</span><br><button class="btn" onclick="routeOn(\'bd\')">Từ đường Bạch Đằng</button><button class="btn" onclick="routeOn(\'tp\')">Từ đường Trần Phú</button>';return}
+  if(w!==rtSel)useRoute(w);rt.on=true;mk2.visible=true;PN.forEach(p=>p.lb.vis=false);stepTo(0)}
+function routeOff(q){rt.on=false;rt.auto=false;rt.mv=false;tube.visible=mk2.visible=false;nums.forEach(o=>o.vis=false);refresh();if(!q)intro()}
+function stepTo(k){rt.k=k;rt.i=stops[k];rt.mv=false;mk2.position.copy(RP[rt.i]);showStop(k)}
+function nextS(){if(rt.mv)return;if(rt.k>=stops.length-1){stepTo(0);return}rt.tgt=stops[rt.k+1];rt.mv=true;rt.seg=0;card.innerHTML=card.innerHTML.replace('Tiếp ▶','Tiếp ▶')}
+function prevS(){rt.mv=false;stepTo(Math.max(0,rt.k-1))}
+function autoS(){rt.auto=!rt.auto;rt.wait=0;showStop(rt.k)}
+// ===== Nhân vật (nhân viên cố định), nội thất =====
+var INT=[],V=[],GL=[],cmat={},follow=null,showP=true,spawnT=0;
+function cm(c){return cmat[c]||(cmat[c]=new THREE.MeshLambertMaterial({color:c}))}
+function pk(a){return a[(Math.random()*a.length)|0]}
+var gT=new THREE.BoxGeometry(0.55,0.75,0.3),gH=new THREE.SphereGeometry(0.22,10,8),gHr=new THREE.SphereGeometry(0.235,10,6,0,6.283,0,1.45),gLg=new THREE.BoxGeometry(0.2,0.8,0.22).translate(0,-0.4,0),gAr=new THREE.BoxGeometry(0.14,0.65,0.16).translate(0,-0.33,0),gEy=new THREE.SphereGeometry(0.03,6,4),gHt=new THREE.CylinderGeometry(0.2,0.3,0.14,10),gBg=new THREE.BoxGeometry(0.4,0.5,0.2);
+var SK=[0xf1c9a5,0xd9a37c,0xb67d56,0x8d5a3b],HR=[0x2b2118,0x3b2a1a,0x111111,0x8a6a3a,0xcfcfcf],SH=[0xe74c3c,0x3498db,0x2ecc71,0xf1c40f,0x9b59b6,0xecf0f1,0x1abc9c,0xe67e22,0xf78fb3],PT=[0x2c3550,0x3b3b3b,0x5a4a3a,0x1f3a6e,0xb8a98c];
+function makeChar(o){var gp=new THREE.Group(),L={};
+  function add(geo,c,x,y,z,key){var m=new THREE.Mesh(geo,cm(c));m.position.set(x,y,z);m.castShadow=true;gp.add(m);if(key)L[key]=m;return m}
+  add(gT,o.shirt,0,1.15,0);add(gH,o.skin,0,1.75,0);add(gHr,o.hair,0,1.78,0);
+  [-0.08,0.08].forEach(x=>{var e=new THREE.Mesh(gEy,cm(0x111111));e.position.set(x,1.77,0.2);gp.add(e)});
+  add(gLg,o.pants,-0.14,0.8,0,'ll');add(gLg,o.pants,0.14,0.8,0,'rl');add(gAr,o.shirt,-0.37,1.5,0,'la');add(gAr,o.shirt,0.37,1.5,0,'ra');
+  if(o.hat)add(gHt,o.hat,0,1.98,0);if(o.bag)add(gBg,o.bag,0,1.2,-0.25);if(o.badge)add(new THREE.BoxGeometry(0.14,0.08,0.02),0xffd54a,0.14,1.35,0.16);
+  gp.scale.setScalar(o.s||1);gp.userData.L=L;return gp}
+function box(g2,w,h,d,c,x,y,z,op){var m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshLambertMaterial({color:c,transparent:op<1,opacity:op||1}));m.position.set(x,y,z);m.castShadow=true;g2.add(m);return m}
+function glow(g2,w,h,d,c,x,y,z,ph){var m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshBasicMaterial({color:c}));m.position.set(x,y,z);g2.add(m);if(ph!==undefined)GL.push({m:m,ph:ph});return m}
+function room(f,f2){var g2=new THREE.Group();S.add(g2);var o={f:f,f2:f2||f,g:g2,lb:[]};INT.push(o);return o}
+function ccase(o,x,y,z,k){box(o.g,2.2,0.9,1.2,0x6b5236,x,y+0.45,z);box(o.g,2.2,1.1,1.2,0xbfe3ff,x,y+1.45,z,0.3);
+  if(k===0){for(var i=0;i<3;i++)box(o.g,0.7,0.04,0.5,0xf1e6c9,x-0.6+i*0.6,y+0.97+i*0.04,z)}
+  else if(k===1){box(o.g,0.9,0.05,0.8,0xb5322e,x-0.5,y+0.97,z);box(o.g,0.9,0.05,0.8,0x2b4a8a,x+0.5,y+0.97,z)}
+  else{var m=new THREE.Mesh(new THREE.CylinderGeometry(0.25,0.35,0.6,10),cm(0x9a6b3f));m.position.set(x,y+1.2,z);o.g.add(m)}}
+function staff(o,x,y,z,ry){var c=makeChar({shirt:0x1e3a5f,pants:0x222222,skin:pk(SK),hair:pk(HR),badge:true});c.position.set(x,y,z);c.rotation.y=ry;o.g.add(c)}
+// Tầng 1
+var r1=room(1),i,j,q;
+function RL(o,t,x,y,h,ty){var p=G1(x,y),l=addLabel(t,'rm',new THREE.Vector3(p[0],h,p[1]));l.vis=false;l.el.style.borderColor='#'+new THREE.Color(TY[ty][1]).getHexString();o.lb.push(l)}
+q=G1(1400,1015);box(r1.g,5,1.1,1.2,0x7a5a3a,q[0],0.6,q[1]);staff(r1,q[0]-1.5,0.1,q[1]+1.2,Math.PI);staff(r1,q[0]+1.5,0.1,q[1]+1.2,Math.PI);
+for(i=0;i<4;i++)for(j=0;j<2;j++){q=G1(750+i*40,590+j*45);var tb=new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,0.9,14),cm(0xe8e1d4));tb.position.set(q[0],0.5,q[1]);r1.g.add(tb)}
+for(i=0;i<2;i++){q=G1(1275+i*50,1075);box(r1.g,3.4,2,0.5,0x8a6a4a,q[0],1.05,q[1]);for(j=0;j<5;j++)box(r1.g,0.4,0.4,0.3,pk(SH),q[0]-1.3+j*0.65,1.2,q[1]-0.3)}
+for(i=0;i<6;i++){q=G1(850+i*65,i%2?1055:995);box(r1.g,2.2,3,0.15,0xf0e9dc,q[0],1.55,q[1]);box(r1.g,1.8,1.6,0.05,pk([0x5b8def,0xe08a4a,0x58b08a,0x9b6fd6]),q[0],1.8,q[1]+0.1)}
+for(i=0;i<6;i++)for(j=0;j<7;j++){q=G1(420+j*25,790+i*28);box(r1.g,0.5,0.5,0.5,0x7a3b3b,q[0],0.3,q[1])}
+q=G1(506,760);box(r1.g,10,0.6,4,0x8a6a4a,q[0],0.35,q[1]);
+for(i=0;i<3;i++)for(j=0;j<6;j++){q=G1(1150+j*20,500+i*35);box(r1.g,0.5,0.5,0.5,0x2f6df6,q[0],0.3,q[1])}
+[[960,740],[1050,800],[1150,740],[1230,820]].forEach(p=>{q=G1(p[0],p[1]);box(r1.g,1,0.9,1,0xd8d2c4,q[0],0.5,q[1]);var sp=new THREE.Mesh(new THREE.SphereGeometry(0.35,10,8),cm(0xc2410c));sp.position.set(q[0],1.3,q[1]);r1.g.add(sp)});
+for(i=0;i<3;i++)for(j=0;j<3;j++){q=G1(965+i*45,490+j*45);var rt1=new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,0.9,14),cm(0xe8e1d4));rt1.position.set(q[0],0.5,q[1]);r1.g.add(rt1)}
+q=G1(1215,455);box(r1.g,6,2.5,0.15,0xf5f5f5,q[0],1.6,q[1]);
+RL(r1,'Sảnh công cộng',790,800,3.2,'pub');RL(r1,'WC · Gửi đồ',1320,700,3.2,'tech');RL(r1,'Phòng họp · Văn phòng',1420,590,3.2,'tech');
+var esc=room(1,3);q=G1(1450,905);var em=box(esc.g,2.4,0.4,10.9,0x9aa4b8,q[0],4.85,q[1]);em.rotation.x=-0.99;q=G1(1480,775);box(esc.g,2.6,3*FH,2.6,0xe0407a,q[0],1.5*FH,q[1],0.55);RL(esc,'Thang máy',1480,775,3*FH+1,'svc');
+// Tầng 2
+var r2=room(2),b2=FH+0.04;
+
+for(i=0;i<4;i++){q=G1(970+i*22,480);box(r2.g,1,2.2,0.5,0x7a5a3a,q[0],b2+1.1,q[1]);for(j=0;j<3;j++)box(r2.g,0.8,0.25,0.3,pk(SH),q[0],b2+0.6+j*0.6,q[1]+0.1)}
+q=G1(1010,525);box(r2.g,3,0.8,1.4,0xd8cfba,q[0],b2+0.45,q[1]);
+for(i=0;i<3;i++){q=G1(1190+i*35,490);box(r2.g,2,0.9,1.4,0x2b3a55,q[0],b2+0.5,q[1]);glow(r2.g,1.8,0.05,1.2,0x6ad1ff,q[0],b2+0.97,q[1],i/3)}
+// Tầng 3
+var r3=room(3),b3=2*FH+0.04;
+
+
+for(i=0;i<6;i++)[722,814].forEach(x=>{var c=new THREE.Mesh(new THREE.CylinderGeometry(0.4,0.4,2*FH-0.1,10),cm(0xe9e2d2));c.position.set(mxp(x),FH-0.05,mzp(680+i*50));S.add(c)});
+var CY=0xf4dd72,CB=0x8dcff0,CP=0xf2b2d0,CG=0x8fd48f;
+function SL(o,y,col,a,cv){var p=cv(a[0],a[1]),q2=cv(a[2],a[3]),m=new THREE.Mesh(new THREE.BoxGeometry(Math.abs(q2[0]-p[0]),0.1,Math.abs(q2[1]-p[1])),new THREE.MeshLambertMaterial({color:col}));m.position.set((p[0]+q2[0])/2,y,(p[1]+q2[1])/2);m.receiveShadow=true;o.g.add(m)}
+function SLS(o,y,cv,L){L.forEach(l=>l[1].forEach(a=>SL(o,y+(l[0]===CB?0.06:0.08),l[0],a,cv)))}
+var DM=new THREE.MeshBasicMaterial({color:0xe03030}),DG=new THREE.BoxGeometry(0.4,0.12,0.4);
+function DOTS(o,y,cv,P){for(var k=0;k<P.length-1;k++){var a=cv(P[k][0],P[k][1]),b=cv(P[k+1][0],P[k+1][1]),n=Math.max(1,Math.round(Math.hypot(b[0]-a[0],b[1]-a[1])/1.2));for(var t=0;t<=n;t++){var m=new THREE.Mesh(DG,DM);m.position.set(a[0]+(b[0]-a[0])*t/n,y+0.12,a[1]+(b[1]-a[1])*t/n);o.g.add(m)}}}
+function SNK(x0,x1,st,ya,yb){var P=[],k=0;for(var x=x0;x>=x1;x-=st,k++){P.push(k%2?[x,yb]:[x,ya],k%2?[x,ya]:[x,yb])}return P}
+SLS(r1,0.1,G1,[[CB,[[938,435,1285,662],[700,560,895,665],[722,665,890,940],[1288,640,1507,930],[722,915,1507,950],[1345,950,1507,1092],[1248,1000,1345,1085],[378,742,635,985],[215,985,645,1135],[455,700,570,742]]],[CG,[[1335,533,1512,665],[215,970,295,1040],[400,1055,595,1115],[722,875,800,925]]],[CP,[[727,1010,800,1085]]],[CY,[[805,955,1245,1085]]]]);
+DOTS(r1,0.1,G1,SNK(1230,830,60,975,1070).concat([[1240,1030]]));DOTS(r1,0.1,G1,[[1390,1035],[1485,1035],[1485,895]]);
+SLS(r2,b2,G2,[[CB,[[300,618,510,775],[963,715,1225,950],[500,708,560,740],[305,925,430,1100],[430,1065,700,1100]]],[CG,[[1020,620,1225,715]]],[CP,[[305,1100,400,1265]]],[CY,[[560,505,960,740]]]]);
+DOTS(r2,b2,G2,[[590,545],[900,545],[900,625],[760,625],[760,720],[620,720],[620,625],[590,625],[590,545]]);DOTS(r2,b2,G2,[[960,722],[1040,722],[1040,880]]);
+for(i=0;i<9;i++){q=G1(772,921-(i+0.5)*13.7);box(r2.g,8.7,(i+1)*0.5,1.1,CB,q[0],(i+1)*0.25,q[1])}
+q=G1(968,935);var rm2=box(r2.g,15.3,0.3,2.4,CB,q[0],2.25,q[1]);rm2.rotation.z=-0.299;
+SLS(r3,b3,G3,[[CB,[[465,1065,1185,1100],[1185,620,1255,1100],[1000,710,1185,740]]],[CG,[[1060,620,1265,715]]],[CP,[[350,1100,400,1265]]],[CY,[[465,1100,1255,1265],[340,640,465,1100],[340,640,545,750],[600,500,1000,740]]]]);
+[[205,720,340,900],[1075,1265,1260,1420],[1265,850,1310,1050]].forEach(a=>{var p=G3(a[0],a[1]),q2=G3(a[2],a[3]),m=new THREE.Mesh(new THREE.BoxGeometry(Math.abs(q2[0]-p[0]),0.2,Math.abs(q2[1]-p[1])),cm(0x7a5a3a));m.position.set((p[0]+q2[0])/2,b3+0.1,(p[1]+q2[1])/2);m.castShadow=true;r3.g.add(m)});
+DOTS(r3,b3,G3,[[1235,1060],[1215,1200]].concat(SNK(1160,520,60,1130,1230),[[450,1230],[400,1200],[400,720],[360,660],[520,660],[560,720],[800,720],[640,720],[640,540],[900,540],[900,700]]));
+function cyl3(o,rt,rb,h,c,x,y,z){var m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,12),cm(c));m.position.set(x,y,z);m.castShadow=true;o.g.add(m);return m}
+function sph3(o,r,c,x,y,z){var m=new THREE.Mesh(new THREE.SphereGeometry(r,12,8),cm(c));m.position.set(x,y,z);m.castShadow=true;o.g.add(m);return m}
+function cone3(o,r,h,c,x,y,z,seg,ry){var m=new THREE.Mesh(new THREE.ConeGeometry(r,h,seg||12),cm(c));m.position.set(x,y,z);m.rotation.y=ry||0;m.castShadow=true;o.g.add(m);return m}
+function ring3(o,R,t,c,x,y,z,arc){var m=new THREE.Mesh(new THREE.TorusGeometry(R,t,8,24,arc||6.283),cm(c));m.position.set(x,y,z);o.g.add(m);return m}
+function man(o,x,y,z,c){cyl3(o,0.22,0.3,1,c,x,y+0.5,z);sph3(o,0.2,0xf1c9a5,x,y+1.2,z)}
+function stand(o,x,y,z,w,d){box(o.g,w,0.3,d,0xd8cfba,x,y+0.15,z)}
+function CASEK(o,x,y,z,k){box(o.g,2.2,0.9,1.2,0x6b5236,x,y+0.45,z);box(o.g,2.2,1.1,1.2,0xbfe3ff,x,y+1.45,z,0.3);
+  if(k===0){sph3(o,0.4,0xa0643a,x,y+1.4,z);cyl3(o,0.2,0.3,0.2,0x8a5530,x,y+1.9,z)}
+  else if(k===1){cyl3(o,0.5,0.4,0.5,0xb8892e,x,y+1.25,z);cyl3(o,0.5,0.5,0.06,0xd9a93a,x,y+1.53,z)}
+  else if(k===2){cyl3(o,0.15,0.3,0.7,0x9cc9b0,x,y+1.3,z);sph3(o,0.2,0x9cc9b0,x,y+1.75,z)}
+  else{var a=ring3(o,0.22,0.05,0xe0b030,x-0.5,y+1.05,z);a.rotation.x=1.57;a=ring3(o,0.28,0.05,0xcfd8dc,x+0.4,y+1.05,z);a.rotation.x=1.57}}
+function EXH(o,k,x,y,z){var i,j;
+  if(k==='photo'){stand(o,x,y,z,7,4);for(i=0;i<3;i++)for(j=0;j<6;j++)box(o.g,1,0.8,0.08,pk([0x5b8def,0xe08a4a,0x58b08a,0x9b6fd6,0xe8d9b5]),x-2.6+j*1.05,y+1+i*0.9,z-1.6)}
+  else if(k==='nature'){stand(o,x,y,z,7,4);cone3(o,1.3,2.4,0x6a8f5a,x-2,y+1.5,z-0.5);cone3(o,0.9,1.6,0x4f7a4a,x-0.6,y+1.1,z-0.8);box(o.g,2.6,0.1,2.6,0x4aa3c7,x+1.9,y+0.35,z+0.2);man(o,x+0.2,y+0.3,z+1.1,0xe67e22);man(o,x+0.9,y+0.3,z+1.2,0x3498db)}
+  else if(k==='city'){stand(o,x,y,z,7,4);for(i=0;i<2;i++)for(j=0;j<5;j++){var h=0.6+((i*5+j)*7%5)*0.35;box(o.g,0.9,h,0.9,pk([0xd9c9a8,0xb8c4d0,0xe8dcc0]),x-2+j*1,y+0.3+h/2,z-0.7+i*1.4)}box(o.g,0.8,3,0.8,0xb8c4d0,x+2.8,y+1.8,z)}
+  else if(k==='indep'){stand(o,x,y,z,7,4);cyl3(o,0.05,0.05,3.2,0xdddddd,x-2,y+1.9,z);box(o.g,1.4,0.9,0.05,0xda251d,x-1.3,y+3.1,z);var c=cyl3(o,0.18,0.25,1.8,0x3a3f4a,x+0.8,y+0.95,z);c.rotation.z=1.25;sph3(o,0.4,0x5a4a3a,x+0.3,y+0.5,z+0.4);box(o.g,1.6,0.3,1,0x7a5a3a,x+0.8,y+0.45,z)}
+  else if(k==='war'){stand(o,x,y,z,7,4);var hm=new THREE.Mesh(new THREE.SphereGeometry(0.6,12,8,0,6.283,0,1.57),cm(0x5a6b3a));hm.position.set(x-2,y+0.3,z);o.g.add(hm);for(i=0;i<3;i++){cyl3(o,0.14,0.14,0.8,0x8a7a3a,x-0.5+i*0.5,y+0.7,z);cone3(o,0.14,0.3,0xb08a3a,x-0.5+i*0.5,y+1.25,z)}for(i=0;i<6;i++)box(o.g,0.8,0.3,0.5,0xc8b88a,x+1.5+(i%3)*0.8,y+0.45+Math.floor(i/3)*0.3,z)}
+  else if(k==='bridge'){stand(o,x,y,z,7,4);box(o.g,7,0.06,2.4,0x4aa3c7,x,y+0.33,z);box(o.g,5.2,0.15,0.8,0xcfc9bb,x,y+0.8,z);var a=ring3(o,2.4,0.1,0xe0b030,x,y+0.8,z,3.14159);a.castShadow=true;box(o.g,0.2,0.5,0.2,0xe0b030,x-2.4,y+0.55,z);box(o.g,0.2,0.5,0.2,0xe0b030,x+2.4,y+0.55,z)}
+  else if(k==='culture'){stand(o,x,y,z,7,9);box(o.g,2.2,1.2,1.6,0x9a7a54,x,y+0.9,z-3);cone3(o,1.9,1,0x6b4a2a,x,y+2,z-3,4,0.785);cyl3(o,0.5,0.5,1,0x8a5530,x-1.6,y+0.8,z).rotation.z=1.57;man(o,x+0.3,y+0.3,z,0xc0392b);man(o,x+1.2,y+0.3,z,0x2980b9);man(o,x+2.1,y+0.3,z,0xf1c40f);for(i=0;i<3;i++)box(o.g,0.1,1.2,0.1,0x7a5a3a,x-1.5+i*0.5,y+0.9,z+3)}
+  else if(k==='hall'){stand(o,x,y,z,7,4.5);box(o.g,4,1.4,1.6,0xeadcc0,x,y+1,z);for(i=0;i<4;i++)cyl3(o,0.12,0.12,1.2,0xffffff,x-1.5+i,y+0.9,z+0.95);cone3(o,2.6,1,0xa8895c,x,y+2.2,z,4,0.785);box(o.g,0.7,1.2,0.7,0xeadcc0,x,y+2.5,z)}}
+[['photo',0],['nature',1],['city',2],['indep',3],['war',4],['bridge',5]].forEach(a=>EXH(r3,a[0],mxp(880+a[1]*116),b3+0.05,mzp(1030)));
+q=G1(768,800);EXH(r3,'culture',q[0],b3+0.05,q[1]);q=G1(1111,605);EXH(r2,'hall',q[0],b2+0.05,q[1]);
+[0,0,1,1,1].forEach((k,n)=>CASEK(r3,mxp(975+n*60),b3,mzp(500),k));[2,2,3,3].forEach((k,n)=>CASEK(r3,mxp(1005+n*60),b3,mzp(580),k));
+for(i=0;i<9;i++){q=G1(945+i*37,650);box(r2.g,2.4,2,0.1,pk([0xe9e2d2,0xd8cfba]),q[0],b2+1.1,q[1])}
+RL(r2,'Cà phê tầng 2',805,600,b2+3.4,'pub');RL(r2,'Phòng họp · Văn phòng',1420,575,b2+3.4,'tech');RL(r2,'Thang xuống tầng 1',1400,759,b2+3.4,'svc');
+RL(r3,'Hiện vật khảo cổ',1005,500,b3+3.6,'exh');RL(r3,'Đồ đồng',1155,500,b3+3.6,'exh');RL(r3,'Đồ gốm',1035,580,b3+3.6,'exh');RL(r3,'Trang sức cổ',1155,580,b3+3.6,'exh');RL(r3,'Văn phòng',1420,575,b3+3.4,'tech');
+// Tầng hầm
+var r0=room(-1);
+SLS(r0,-FH,G1,[[CB,[[718,640,1515,1135]]],[CP,[[718,640,916,1012]]],[CG,[[718,1012,916,1055],[1431,1060,1515,1135]]]]);
+for(i=0;i<3;i++)for(j=0;j<4;j++){q=G1(750+i*65,680+j*85);box(r0.g,3,2.4,0.8,0x8a93a8,q[0],-FH+1.25,q[1])}
+for(i=0;i<8;i++)for(j=0;j<3;j++){q=G1(950+i*60,700+j*110);box(r0.g,2,1.1,4.2,pk([0xc0392b,0x2980b9,0xecf0f1,0x2c3e50,0x7f8c8d]),q[0],-FH+0.7,q[1])}
+q=G1(1000,1180);var rp=box(r0.g,8,0.4,18.5,0x6b7080,q[0],-2.2,28);rp.rotation.x=-0.24;
+// ===== Cảnh vật chi tiết =====
+function sb(w,h,d,c,x,y,z){var m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),cm(c));m.position.set(x,y,z);m.castShadow=true;S.add(m);return m}
+function cyl(r1,r2,h,c,x,y,z,seg){var m=new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,seg||10),cm(c));m.position.set(x,y,z);m.castShadow=true;S.add(m);return m}
+var lampM=new THREE.MeshBasicMaterial({color:0xfff2a8});
+function lamp(x,z){cyl(0.1,0.14,5,0x3a3f4a,x,2.5,z,6);var h=new THREE.Mesh(new THREE.SphereGeometry(0.4,8,6),lampM);h.position.set(x,5.2,z);S.add(h)}
+function palm(x,z){cyl(0.22,0.35,7,0x8a6a44,x,3.5,z,6);for(var a=0;a<7;a++){var f=new THREE.Mesh(new THREE.ConeGeometry(0.5,4,4),cm(0x2e8b4a)),an=a*0.9;f.position.set(x+Math.cos(an)*1.4,7.1,z+Math.sin(an)*1.4);f.rotation.set(Math.sin(an)*1.2,0,-Math.cos(an)*1.2);S.add(f)}}
+function car(x,z,c){sb(4.2,1,1.8,c,x,0.65,z);sb(2.2,0.8,1.6,0xbfd9ea,x-0.2,1.5,z);[[-1.3,-0.9],[-1.3,0.9],[1.3,-0.9],[1.3,0.9]].forEach(w=>sb(0.8,0.8,0.3,0x222222,x+w[0],0.4,z+w[1]))}
+function boat(x,z,c){sb(7,1.2,2.4,c,x,0.7,z);sb(3,1.4,2,0xf5f5f5,x,1.9,z);sb(3.4,0.2,2.4,0x555b6b,x,2.7,z)}
+function bush(x,z,fc){var b=new THREE.Mesh(new THREE.SphereGeometry(0.85,10,8),cm(0x2f9e57));b.position.set(x,0.6,z);b.castShadow=true;S.add(b);for(var k=0;k<5;k++){var fl2=new THREE.Mesh(new THREE.SphereGeometry(0.14,6,5),cm(fc));fl2.position.set(x+Math.cos(k*1.3)*0.7,1.1+(k%2)*0.2,z+Math.sin(k*1.3)*0.7);S.add(fl2)}}
+function plant(o,x,y,z){var p=new THREE.Mesh(new THREE.CylinderGeometry(0.35,0.28,0.6,10),cm(0xb0643a));p.position.set(x,y+0.3,z);o.g.add(p);var l=new THREE.Mesh(new THREE.SphereGeometry(0.6,10,8),cm(0x2f9e57));l.position.set(x,y+1.1,z);o.g.add(l)}
+for(i=-190;i<=190;i+=14){sb(6,0.04,0.25,0xffffff,i,0.13,-48);sb(6,0.04,0.25,0xffffff,i,0.13,48)}
+for(i=-90;i<=90;i+=30){lamp(i,-39.5);lamp(i+15,40)}
+[-80,-50,-20,22,52,80].forEach(x=>palm(x,-38));[-70,-35,30,65].forEach(x=>palm(x,40.5));
+car(-62,-51.5,0xc0392b);car(-34,-51.5,0x2980b9);car(42,-51.5,0xecf0f1);car(-45,52,0xf1c40f);car(20,52,0x7f8c8d);car(60,52,0x1abc9c);
+boat(-40,-85,0xb5322e);boat(25,-100,0x2b4a8a);boat(70,-90,0xe67e22);boat(-10,-115,0x3a8f6a);
+cyl(0.12,0.16,14,0xdddddd,GP[0]+8,7,GP[1],8);var flg=new THREE.Mesh(new THREE.PlaneGeometry(4,2.7),new THREE.MeshBasicMaterial({side:THREE.DoubleSide,map:mk(x=>{x.fillStyle='#da251d';x.fillRect(0,0,64,64);x.fillStyle='#ffde00';x.beginPath();for(var k=0;k<10;k++){var rr=k%2?7:18,aa=-Math.PI/2+k*Math.PI/5;x[k?'lineTo':'moveTo'](32+rr*Math.cos(aa),34+rr*Math.sin(aa))}x.fill()})}));flg.position.set(GP[0]+10,12.2,GP[1]);S.add(flg);
+q=G1(1090,790);flat(q[0],q[1],3,250/SCL,0xe0d8c8,0.13);
+[[980,700],[1200,700],[1200,880],[980,880]].forEach(p=>{var b=G1(p[0],p[1]);sb(2,0.15,0.6,0x7a5a3a,b[0],0.5,b[1]);sb(0.15,0.5,0.5,0x333333,b[0]-0.8,0.25,b[1]);sb(0.15,0.5,0.5,0x333333,b[0]+0.8,0.25,b[1])});
+[[930,690,0xff6b81],[1260,690,0xffd93d],[1260,900,0xff6b81],[930,900,0xc084fc]].forEach(b=>{var g2=G1(b[0],b[1]);bush(g2[0],g2[1],b[2])});
+q=G1(1330,860);plant(r1,q[0],0.1,q[1]);q=G1(1330,1000);plant(r1,q[0],0.1,q[1]);
+// mô tả nội thất
+var ex={lobby:' Có quầy lễ tân và nhân viên đón khách.',cafe:' Bàn ghế, quầy pha chế.',shop:' Kệ quà lưu niệm, bàn trưng bày.',short:' Panel tranh ảnh dựng và thay theo từng đợt.',amen:' Bàn ăn tròn.',conf:' Ghế xếp hàng, bục phát biểu và màn chiếu.',hall:' Sân khấu và hàng ghế.',garden:' Ghế nghỉ, bãi cỏ trưng bày ngoài trời.',deep:' Tủ kính trưng bày tài liệu giấy, đồ dệt may, hiện vật tổng hợp; bàn tương tác.',hist3:' Tủ kính và tranh treo tường; hiện vật chủ yếu là tài liệu giấy, đồ dệt may, hiện vật tổng hợp.',era:' Sáu màn chiếu lớn (Hiện vật 1–6), nền sàn đổi màu theo hình chiếu.',tech:' Kệ kho, thùng hàng, thang hàng.',esc:' Băng thang cuốn nối sảnh với tầng 3.'};
+Z.forEach(z=>{if(ex[z.id])z.d+=ex[z.id]});
+function peopleStep(dt,now){GL.forEach(o=>o.m.material.color.setHSL((now/9000+o.ph)%1,0.65,0.55))}
+// ===== Chế độ 360° =====
+var ORD=['lobby','esc','a1','a2','a3','a4','a5','a6','a7','a8','a9','shop','cafe','short','amen','garden','hall','gate','gate2','conf','lib','explore'],RID=['gate','lobby','esc','a3','a9','a8','shop','cafe'],svSel='all';
+function byId(id){return Z.filter(o=>o.id===id)[0]}
+var ZL=ORD.map(byId);
+function wallMode(on){FM.forEach(m=>m.material.forEach(x=>{x.side=on?THREE.DoubleSide:THREE.FrontSide;x.needsUpdate=true}))}
+function card360(){var i=m3.i,z=ZL[i],n=ZL.length;card.innerHTML='<b>👁 360° · Vị trí '+(i+1)+'/'+n+' – '+z.n+'</b><br><span class="m">Đứng yên tại chỗ: kéo để nhìn quanh, cuộn hoặc chụm hai ngón để phóng to.</span><br>'+z.d+'<br><button class="btn" onclick="go360('+((i+n-1)%n)+')">◀</button><button class="btn" onclick="go360('+((i+1)%n)+')">▶</button><button class="btn'+(m3.auto?' on':'')+'" onclick="tgl360()">🔄 Tự quay</button><button class="btn" onclick="exit360()">✕ Thoát</button>'}
+function go360(i){if(i<0)return;var z=ZL[i];document.getElementById('lg').style.display='none';
+  if(!m3){svSel=sel;if(rt.on)routeOff(true);document.querySelector('.top').style.display='none';wallMode(true);m3={yaw:0,pitch:0,fov:70,auto:true}}
+  goal=null;setFloor(z.f<0?-1:z.f);FM.forEach(m=>setOp(m,1));PN.forEach(p=>p.lb.vis=false);nums.forEach(o=>o.vis=false);LB.slice(0,3).forEach(o=>o.vis=false);
+  m3.i=i;m3.x=z.x;m3.z=z.z;m3.y=z.ey!==undefined?z.ey:(z.f<0?-FH:(z.f-1)*FH)+1.74;card360()}
+function tgl360(){m3.auto=!m3.auto;card360()}
+function exit360(){if(!m3)return;m3=null;wallMode(false);document.querySelector('.top').style.display='flex';setFloor(svSel);LB.slice(0,3).forEach(o=>o.vis=true);intro()}
+var b3=document.createElement('button');b3.className='btn';b3.textContent='👁 360°';b3.onclick=()=>go360(0);fr.appendChild(b3);
+var bp=document.createElement('button');bp.className='btn';bp.textContent='✋ Kéo bản đồ';bp.onclick=()=>{panMode=!panMode;bp.classList.toggle('on',panMode);bp.textContent=panMode?'✋ Đang kéo':'✋ Kéo bản đồ';cv.style.cursor=panMode?'grab':''};fr.appendChild(bp);
+addEventListener('keydown',e=>{if(!m3||document.activeElement.tagName==='INPUT')return;var k=e.key;
+  if(k==='ArrowLeft'){m3.yaw+=0.1;m3.auto=false}else if(k==='ArrowRight'){m3.yaw-=0.1;m3.auto=false}else if(k==='ArrowUp')m3.pitch=Math.min(1.4,m3.pitch+0.08);else if(k==='ArrowDown')m3.pitch=Math.max(-1.4,m3.pitch-0.08);else if(k==='Escape')exit360()});
+var LGD={1:['Tầng trệt',3116,[41,400,2350,324]],2:['Tầng 2',1124,[74,500,460,90]],3:['Tầng 3',1947,[32,1518,235,160]]},LGC=[['#f2b2d0','Phụ trợ, kỹ thuật bảo tàng'],['#f4dd72','Trưng bày cho công chúng'],['#8dcff0','Công cộng, không gian chung'],['#8fd48f','Không gian kỹ thuật']];
+function updLg(n){var d=LGD[n],e=document.getElementById('lg');if(!d)return;e.innerHTML='<b>'+d[0]+' · '+d[1].toLocaleString('vi-VN')+' m²</b><br>'+LGC.map((c,i)=>'<span class="sw" style="background:'+c[0]+'"></span>'+c[1]+'<span class="n">'+d[2][i]+'</span><br>').join('')+'<span class="m" style="color:var(--muted)">Chấm đỏ: lộ trình tham quan · cột hồng: thang máy</span>'}
+var _sf=setFloor;setFloor=function(n){_sf(n);updLg(n)};
+var lgb=document.createElement('button');lgb.className='btn';lgb.textContent='ℹ Chú giải';lgb.onclick=()=>{var e=document.getElementById('lg');e.style.display=getComputedStyle(e).display==='none'?'block':'none'};fr.appendChild(lgb);
+function goPage(n){if(rt.on)routeOff(true);setFloor(n);intro();fly(new THREE.Vector3(3,(n-1)*FH,0),125,0.3)}
+function fromHash(){if(m3)return;goPage(+((location.hash.match(/tang([123])/)||[])[1]||1))}
+addEventListener('hashchange',fromHash);fromHash();
+// nút ✕ tắt khi ở giao diện chỉ đường (hành trình / 360°)
+var cardBtn=document.createElement('button');cardBtn.className='btn';cardBtn.textContent='☰ Thông tin';cardBtn.style.cssText='position:absolute;left:8px;bottom:calc(env(safe-area-inset-bottom,0px) + 8px);z-index:6;display:none;box-shadow:0 4px 14px rgba(0,0,0,.25)';document.body.appendChild(cardBtn);
+function hideCard(){card.style.display='none';cardBtn.style.display='block'}
+function showCard(){card.style.display='';cardBtn.style.display='none'}
+cardBtn.onclick=showCard;
+['pickZ','routeOn','go360'].forEach(function(n){var f=window[n];window[n]=function(){showCard();return f.apply(this,arguments)}});
+function closeNav(){if(m3)exit360();else if(rt.on||/Chọn điểm bắt đầu/.test(card.textContent))routeOff();else hideCard()}
+(function(){var busy=false;function need(){return true}
+function fix(){if(busy)return;busy=true;var x=card.querySelector('.cx');if(need()){if(!x){x=document.createElement('button');x.className='btn cx';x.setAttribute('aria-label','Đóng');x.textContent='✕';x.onclick=closeNav;card.insertBefore(x,card.firstChild)}}else if(x)x.remove();busy=false}
+new MutationObserver(fix).observe(card,{childList:true});fix()})();
+addEventListener('keydown',function(e){if(e.key==='Escape'&&!m3&&(rt.on||/Chọn điểm bắt đầu/.test(card.textContent)))closeNav()});
+hideCard();
+// vòng lặp
+var v3=new THREE.Vector3(),last=performance.now();
+function size(){var w=innerWidth,h=innerHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix()}addEventListener('resize',size);size();
+function loop(now){var dt=Math.min((now-last)/1000,0.05);last=now;
+  if(goal){var k=1-Math.pow(0.002,dt);tgt.lerp(goal.t,k);rad+=(goal.r-rad)*k;ph+=(goal.p-ph)*k;if(tgt.distanceTo(goal.t)<0.1)goal=null}
+  if(rt.on){mk2.scale.setScalar(1+0.15*Math.sin(now/180));
+    if(rt.mv){var a=RP[rt.i],b=RP[rt.i+1],len=a.distanceTo(b)||1;rt.seg+=dt*14/len;mk2.position.lerpVectors(a,b,Math.min(rt.seg,1));var ff=fl(mk2.position.y);if(ff!==sel)setFloor(ff);tgt.lerp(mk2.position,0.04);
+      if(rt.seg>=1){rt.i++;rt.seg=0;if(rt.i===rt.tgt){rt.mv=false;rt.k++;showStop(rt.k);rt.wait=3.5}}}
+    else if(rt.auto){rt.wait-=dt;if(rt.wait<=0)nextS()}}
+  peopleStep(dt,now);if(m3&&m3.auto)m3.yaw+=dt*0.25;PN.forEach(p=>{var s=cur&&cur.id===p.z.id?1.25+0.12*Math.sin(now/200):1;p.pad.scale.set(s,1,s)});
+  apply();var w=innerWidth,h=innerHeight;
+  LB.forEach(o=>{v3.copy(o.v).project(cam);var ok=o.vis&&v3.z<1;o.el.style.display=ok?'flex':'none';if(o.el.classList.contains('num')===false)o.el.style.display=ok?'block':'none';
+    if(ok){o.el.style.left=(v3.x*0.5+0.5)*w+'px';o.el.style.top=(-v3.y*0.5+0.5)*h+'px'}});
+  R.render(S,cam);requestAnimationFrame(loop)}
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
